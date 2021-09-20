@@ -5,22 +5,17 @@
 </script>
 <script setup lang="ts">
 /* import */
-import { computed, ref, reactive, watchEffect, onMounted, onUpdated, onUnmounted,toRefs } from 'vue'
+import { computed, ref, toRefs, reactive, watchEffect, onMounted, onUpdated, onUnmounted, getCurrentInstance } from 'vue'
 import {useStore} from 'vuex'
 import { Promotion } from '@element-plus/icons'
-import {getArticlesApi} from "../utils/api";
+import {getArticlesApi} from "../api";
 
 /* data */
 type Props={
   msg:string,
   foo:string
 }
- /*  getArticlesApi().then((res:any) => {
-   console.log(res)
-  }).catch((err:any) => {
-    console.log(err)
-  }); */
-
+ 
 // defineProps<Props>(); // defineProps<{ msg: string }>()
 const props = defineProps<Props>();   // 获取props
 const emit = defineEmits(["childClick"]);     // 声明触发事件 childClick
@@ -34,22 +29,42 @@ console.log(foo.value);
  * ref - 简单数据类型
  * reactive - 复杂数据类型
  */
-
 const count = ref(0);//不用 return, 暴露变量到模板,直接在 templete 中使用
 const store = useStore();
+const { proxy }:any =getCurrentInstance();
 
 const state = reactive({
   counter: 0
 })
 
-
-/* computed */
-watchEffect(()=>console.log('监听count:',count.value)); //定义监听，使用同上
+/* watch computed */
+watchEffect(()=>{
+  console.log('监听count:',count.value)
+  if(count.value >= 6 ){
+    clearInterval(timer1);
+    clearInterval(timer2);
+    console.log('⏲定时器:已停止');
+  }
+}); //定义监听，使用同上
 
 const howCount=computed(()=>"现在count值为："+count.value);//定义计算属性，在 setup() 中通过 computed() 注册的计算属性不需要声明类型
 
 /* lifecycle */
-onMounted(() => console.log('mounted!'));
+onMounted(() => {
+  console.log('mounted!','md5:'+proxy.$md5('xxxx'));
+  
+// proxy.$axios.get('/blog/getArticles').then((res: any) => {
+getCurrentInstance()?.appContext.config.globalProperties.$axios.get('/blog/getArticles').then((res: any) => {
+    console.log(res)
+  })
+  
+  /*  getArticlesApi()
+   .then((res:any) => {
+   console.log(res)
+  }).catch((err:any) => {
+    console.log(err)
+  }); */
+});
 onUpdated(() => console.log('updated!'));
 // 销毁组件
 onUnmounted(() => {
@@ -79,13 +94,6 @@ const sonToFather = () =>{
 <template>
   <h1>{{ msg }}</h1>
 
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
-
   <p>See <code>README.md</code> for more information.</p>
 
  <!--  <p>
@@ -103,7 +111,7 @@ const sonToFather = () =>{
   <el-button size="mini" @click="addNum">+</el-button>
   <p>
     <el-button size="mini" type="primary" plain>
-            props:{{ props.foo }}
+            父子通讯 props:{{ props.foo }}
     </el-button>
   <el-button size="mini" @click="sonToFather">
     <el-icon><Promotion /></el-icon>
@@ -130,45 +138,26 @@ const sonToFather = () =>{
         <a href="https://element-plus.gitee.io/#/zh-CN/component/installation" target="_blank" rel="noopener">element-plus</a>
       </li>
       <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
+        <a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a>
       </li>
     </ul>
     <h3>Ecosystem</h3>
     <ul>
       <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
+        <a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">Babel</a>
+      </li>
+      <li>
+        <a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">Vue-Devtools</a>
+      </li>
+      <li>
+        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">Vue-Loader</a
         >
       </li>
       <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
+        <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome-Vue</a>
       </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
+      <li><a href="https://code.visualstudio.com/" target="_blank">VSCode</a></li>
+      <li><a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a></li>
     </ul>
     <h3>Essential Links</h3>
     <ul>

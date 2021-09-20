@@ -1,11 +1,8 @@
 <script lang="ts">
-  // import { reactive, ref, onMounted,defineComponent } from 'vue'
-  // const counter = ref(1);
-  // onMounted(() => {
-  //   console.log('onMounted')
-  // })
+  /* 注意 <script lang="ts"> 中没有 setup 与 HelloWorld.vue 组件中声明的有所不同,这两个组件提供两种不同的方式，仅供参开 */
 
   import { reactive, computed, watch, onMounted,onUnmounted, toRefs, ref } from 'vue'
+  import { useRouter } from "vue-router";
   // reactive: 接收一个普通对象然后返回该普通对象的响应式代理。等同于 2.x 的 Vue.observable()
   // ref: 接受一个参数值并返回一个响应式且可改变的 ref 对象。ref 对象拥有一个指向内部值的单一属性 .value。
   // computed: 传入一个 getter 函数，返回一个默认不可手动修改的 ref 对象。
@@ -41,6 +38,8 @@
     // setup 函数是一个新的组件选项。作为在组件内使用 Composition API 的入口点。
     // 调用时刻是初始化属性props确定后，beforeCreate之前 还可以定义 <script setup lang="ts">
     setup() {
+      /* data */
+       const router = useRouter();
       // 定义变量
       const counter = ref(1);
       // 使用鼠标逻辑
@@ -51,10 +50,7 @@
         count: 0
       })
 
-      onMounted(() => {
-          console.log('onMounted')
-      })
-
+      /* watch computed */
       // 响应化：接收一个对象，返回一个响应式的代理对象
       watch(
           () => state.count,
@@ -63,6 +59,15 @@
           }
       )
 
+      /* lifecycle */
+      onMounted(() => {
+          console.log('onMounted')
+      })
+      onUnmounted(() => {
+        clearInterval(timer);
+      })
+
+      /* methods */
       const timer = setInterval(() => {
         counter.value++
         // console.log('点击了',counter.value)
@@ -72,16 +77,18 @@
         state.count++
       }
 
-      onUnmounted(() => {
-        clearInterval(timer);
-      })
+      // 返回
+      const goBack = () => {
+          router.go(-1);
+      };
 
       // 返回对象将和渲染函数上下文合并
       return {
         x,y,time,
         counter,
         state,
-        increment
+        increment,
+        goBack
       }
     }
   }
@@ -96,6 +103,7 @@
     <p>time: {{time}}</p>
     <div>x: {{ x }} y: {{ y }}</div>
     <p>Vue 3 + TypeScript + Vite + vue-router + Vuex, css样式采用 normalize.css 进行初始化。集成了 element-plus UI框架，</p>
+    <el-button size="mini" @click="goBack">返回</el-button>
   </div>
 </template>
 

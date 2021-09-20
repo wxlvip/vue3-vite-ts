@@ -1,10 +1,9 @@
-export type Method = 'get' | 'GET' | 'delete' | 'Delete' | 'head' | 'HEAD' | 'options' | 'OPTIONS' | 'post' | 'POST' | 'put' | 'PUT' | 'patch' | 'PATCH';
+export type MethodTy = 'get' | 'GET' | 'delete' | 'head' | 'HEAD' | 'options' | 'OPTIONS' | 'post' | 'POST' | 'put' | 'PUT' | 'patch' | 'PATCH';
 
 
 export interface AxiosRequestConfig {
-    baseURL?: string,
     url?: string,
-    method?:Method,
+    method?:MethodTy,
     data?:any,
     params?:any,
     headers?:any,
@@ -32,16 +31,16 @@ export interface AxiosError extends Error {
     response?:AxiosResponse,
 }
 
-export interface Axios {
-    request(config:AxiosRequestConfig): AxiosPromise
-    get(url:string,config?:AxiosRequestConfig): AxiosPromise
-    delete(url:string,config?:AxiosRequestConfig): AxiosPromise
-    head(url:string,config?:AxiosRequestConfig): AxiosPromise
-    options(url:string,config?:AxiosRequestConfig): AxiosPromise
-    post(url:string,data?:any,config?:AxiosRequestConfig): AxiosPromise
-    put(url:string,data?:any,config?:AxiosRequestConfig): AxiosPromise
-    patch(url:string,data?:any,config?:AxiosRequestConfig): AxiosPromise
-}
+// export interface Axios {
+//     request(config:AxiosRequestConfig): AxiosPromise
+//     get(url:string,config?:AxiosRequestConfig): AxiosPromise
+//     delete(url:string,config?:AxiosRequestConfig): AxiosPromise
+//     head(url:string,config?:AxiosRequestConfig): AxiosPromise
+//     options(url:string,config?:AxiosRequestConfig): AxiosPromise
+//     post(url:string,data?:any,config?:AxiosRequestConfig): AxiosPromise
+//     put(url:string,data?:any,config?:AxiosRequestConfig): AxiosPromise
+//     patch(url:string,data?:any,config?:AxiosRequestConfig): AxiosPromise
+// }
 
 export interface AxiosInstance extends Axios {
     (config:AxiosRequestConfig):AxiosPromise,

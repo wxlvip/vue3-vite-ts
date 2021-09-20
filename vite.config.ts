@@ -43,8 +43,7 @@ export default defineConfig({
     include: []
   },
   server: {
-    // host: "0.0.0.0"
-    host: "localhost",
+    // host: "0.0.0.0",
     strictPort: true,
     port: 3000,
     // 是否自动在浏览器打开
@@ -52,30 +51,27 @@ export default defineConfig({
     // 是否开启 https
     https: false,
     proxy: {
+      '/debug': {
+        target: 'https://api.ycsnews.com/debug/v1',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/dev/, '')
+      },
       '/dev': {
-        target: 'http://jsonplaceholder.typicode.com/dev',
+        target: 'https://api.ycsnews.com/api/v1',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/dev/, '')
       },
       '/api': {
-        target: 'http://jsonplaceholder.typicode.com/api',
+        target: 'https://api.ycsnews.com/api/v1',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       },
       // with RegEx
       '^/fallback/.*': {
-        target: 'http://jsonplaceholder.typicode.com/fallback',
+        target: 'https://api.xxxx.com/fallback',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/fallback/, '')
-      },
-      // Using the proxy instance
-      // '/api': {
-      //   target: 'http://jsonplaceholder.typicode.com',
-      //   changeOrigin: true,
-      //   configure: (proxy, options) => {
-      //     // proxy will be an instance of 'http-proxy'
-      //   }
-      // }
+      }
     }
   }
 })

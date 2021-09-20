@@ -14,14 +14,15 @@
 ![](https://img.shields.io/badge/release-v0.0.1-blue)
 ![](https://img.shields.io/badge/%24-donate-ff69b4)
 
-# 简介
+## 简介
 
-基于Vue3.0 + Typescript + Vite 构建的空白项目，css 样式采用normalize.css 进行的初始化，以及基本常用的 axios,vue-router,状态管理工具采用的是 vuex，模块化使用 Element Plus已经按需引入配置好，包括打包优化的cdn引入，代码压缩，图片压缩，关闭map等打包优化都已配置完成。项目都是以composition api风格编写。
+vue3 发布之后，性能增强，速度vue2的倍数，打包体积都在减小（treeshaking）,composition api 增加了项目可读性。
 
-vue3 发布之后，性能增强，速度vue2的倍数，打包体积都在减小（treeshaking），composition api 增加了项目可读性。
+为了提升开发效率，减少在配置框架上消耗的时间，根据当前前端发展趋势，基于Vue3.0 + Typescript + Vite 构建的空白项目，内置了 normalize.css 进行 CSS 的初始化，以及基本常用的库 Axios、Vue-Router、Sass、Vuex、Element Plus等，项目都是以composition api风格编写，并配置好了代理以及对cdn引入、代码压缩、图片压缩、关闭map等打包问题进行优化配置。
 
+该方案可作为直接开发使用的架构环境，也可因个人喜好进行修改。
 
-# 目录结构
+## 目录结构
 
 ```
 ├── public                  # 不需要打包的静态资源
@@ -58,26 +59,76 @@ vue3 发布之后，性能增强，速度vue2的倍数，打包体积都在减�
 └── yarn.lock
 ```
 
-# Setup
-## 项目安装
+
+## 功能
+
+- [x] #739
+- [ ] https://github.com/octo-org/octo-repo/issues/740
+- [ ] Add delight to the experience when all tasks are com
+
+
+## Setup
+
+### 下载项目
+```
+// 把模板下载到本地
+git clone https://github.com/lin-xin/vue-manage-system.git
+// 进入模板目录
+cd vue-manage-system
+```
+
+### 项目安装
 
 ```
 npm install  or yarn or yarn install
 ```
 
-## 项目启动
+### 项目启动
 ```
 npm run dev  or yarn dev
 ```
 
-
-# Browsers support
+## Browsers support
 Modern browsers and Internet Explorer 10+.
 
 | IE  | 火狐 | Chrome |  Safari   |
 | --- | --- | --- | --- |
 |  IE10, IE11, Edge |  Firefox last 2 versions | Chrome last 2 versions | Safari last 2 versions |
 
+## License
+[MIT](https://github.com/rcyj-FED/vue3-composition-admin/blob/main/LICENSE)
+
+Copyright (c) 2021-present
+
+
+<!-- 此内容不会出现在呈现的 Markdown 中 
+
+ - [x] Element Plus
+ - [ ] 登录/注销
+ - [ ] Dashboard
+ - [ ] 表格
+ - [ ] Tab 选项卡
+ - [ ] 表单
+ - [ ] 图表 📊
+ - [ ] 富文本编辑器
+ - [ ] 图片拖拽/裁剪上传
+ - [ ] 权限测试
+ - [ ] 404 / 403
+ - [ ] 三级菜单
+ - [ ] 自定义图标
+ 国际化
+
+
+https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#mentioning-people-and-teams
+
+富文本
+
+Vue-Quill-Editor：基于Quill、适用于Vue2的富文本编辑器。 访问地址：vue-quill-editor
+
+markdown
+
+掘金
+mavonEditor：基于Vue的markdown编辑器。 访问地址：mavonEditor
 
 
 ## 项目结构
@@ -123,39 +174,38 @@ Modern browsers and Internet Explorer 10+.
 
 
 	
-	├── public                  # 不需要打包的静态资源
-	│   └── favicon.ico
-	├── src
-	│   ├── api                 # 后台 API 接口封装
-	│   ├── assets              # 需要打包的静态资源
-	│   ├── components          # 公共组件
-	│   ├── composables         # 通用的组合式 API
-	│   ├── layout              # 页面布局模板
-	│   ├── plugins             # 插件
-	│   ├── router              # 路由
-	│   ├── store               # Vuex 存储
-	│   ├── styles              # 样式
-	│     └── index.scss        # 全局通用样式
-	│   ├── utils               # 工具模块
-	│   ├── views               # 路由页面
-	│   ├── App.vue             # 根组件
-	│   ├── main.ts             # 入口模块
-	│   ├── shims-vue.d.ts      # 补充 .vue 模块类型声明
-	│   └── vite-env.d.ts       # 补充 vite 类型声明
-	├── .gitignore
-	├── README.md
-	├── index.html
-	├── package-lock.json
-	├── package.json
-	├── tsconfig.json
-	└── vite.config.ts
+├── public                  # 不需要打包的静态资源
+│   └── favicon.ico
+├── src
+│   ├── api                 # 后台 API 接口封装
+│   ├── assets              # 需要打包的静态资源
+│   ├── components          # 公共组件
+│   ├── composables         # 通用的组合式 API
+│   ├── layout              # 页面布局模板
+│   ├── plugins             # 插件
+│   ├── router              # 路由
+│   ├── store               # Vuex 存储
+│   ├── styles              # 样式
+│     └── index.scss        # 全局通用样式
+│   ├── utils               # 工具模块
+│   ├── views               # 路由页面
+│   ├── App.vue             # 根组件
+│   ├── main.ts             # 入口模块
+│   ├── shims-vue.d.ts      # 补充 .vue 模块类型声明
+│   └── vite-env.d.ts       # 补充 vite 类型声明
+├── .gitignore
+├── README.md
+├── index.html
+├── package-lock.json
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
 
 ```
 
 ## 已集成插件
 
 vue-router、vuex、sass、element-plus、eslint
-
 
 # 项目搭建说明
 
@@ -208,3 +258,18 @@ yarn add --dev eslint prettier eslint-config-prettier eslint-plugin-prettier esl
 ```
 
 
+ "vue-cropperjs": "^5.0.0",
+    "vue-i18n": "^9.0.0",
+    "vue-schart": "^2.0.0",
+    "wangeditor": "^4.7.4"
+ "amfe-flexible": "^2.2.1",
+"moment": "^2.29.0",
+    "postcss-px2rem": "^0.3.0",
+    "qs": "^6.9.4",
+ "px2rem-loader": "^0.1.9",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2",
+    "typescript": "~3.5.3",
+    "vue-cli-plugin-element": "^1.0.1",
+    "vue-template-compiler": "^2.6.10"
+-->
