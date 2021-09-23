@@ -5,10 +5,10 @@
 </script>
 <script setup lang="ts">
 /* import */
-import { computed, ref, toRefs, reactive, watchEffect, onMounted, onUpdated, onUnmounted, getCurrentInstance } from 'vue'
+import { computed, ref, toRefs, reactive, watchEffect, onMounted, onUpdated, onUnmounted, getCurrentInstance, nextTick } from 'vue'
 import {useStore} from 'vuex'
 import { Promotion } from '@element-plus/icons'
-import {getArticlesApi} from "../api";
+// import {getArticlesApi} from "../api";
 
 /* data */
 type Props={
@@ -31,7 +31,26 @@ console.log(foo.value);
  */
 const count = ref(0);//不用 return, 暴露变量到模板,直接在 templete 中使用
 const store = useStore();
-const { proxy }:any =getCurrentInstance();
+
+/*
+//  方式一，ctx 这种方式只能在开发环境下使用，生产环境下的ctx将访问不到 
+//  方式二，proxy 此方法在开发环境以及生产环境下都能放到组件上下文对象（推荐）
+// ctx 中包含了组件中由ref和reactive创建的响应式数据对象,以及以下对象及方法;
+  proxy.$attrs
+  proxy.$data
+  proxy.$el
+  proxy.$emit
+  proxy.$forceUpdate
+  proxy.$nextTick
+  proxy.$options
+  proxy.$parent
+  proxy.$props
+  proxy.$refs
+  proxy.$root
+  proxy.$slots
+  proxy.$watch
+*/
+const { proxy }:any =getCurrentInstance();// 获取当前组件实例，
 
 const state = reactive({
   counter: 0
@@ -53,10 +72,13 @@ const howCount=computed(()=>"现在count值为："+count.value);//定义计算�
 onMounted(() => {
   console.log('mounted!','md5:'+proxy.$md5('xxxx'));
   
-// proxy.$axios.get('/blog/getArticles').then((res: any) => {
-getCurrentInstance()?.appContext.config.globalProperties.$axios.get('/blog/getArticles').then((res: any) => {
-    console.log(res)
-  })
+    proxy.$axios.get({
+        url:'/blog/getArticles',
+        params:{},
+        data: ''
+    }).then((res: any) => {
+      console.log(res)
+    })
   
   /*  getArticlesApi()
    .then((res:any) => {
@@ -70,6 +92,12 @@ onUpdated(() => console.log('updated!'));
 onUnmounted(() => {
   clearInterval(timer1);
   clearInterval(timer2);
+})
+
+nextTick(()=>{
+  //写入操作
+  console.log(state.counter);
+  
 })
 
 /* methods */

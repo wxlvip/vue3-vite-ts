@@ -1,50 +1,7 @@
 // import axios from 'axios';
 import Qs from "qs";
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types';
+// import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types';
 import axios from 'axios'; // AxiosInstance
-
-const a =  {
-    sayHi: function() {
-		console.log("Hi from module.");
-	},
-    AxiosApi: function({url,params={},method='get'}:any) {
-        const response = axios({
-            baseURL: 'http://api.ycsnews.com/api/v1',
-            url: '/blog/getArticles',
-            method: method || 'get',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json', // 通过头指定，获取的数据类型是JSON 'application/json, text/plain, */*',
-            },
-            params: method==='get'? params || {} : {},
-            // `paramsSerializer` 是一个负责 `params` 序列化的函数
-            // (e.g. https://www.npmjs.com/package/qs, http://api.jquery.com/jquery.param/)
-            paramsSerializer: function(params) {
-                return Qs.stringify(params, {arrayFormat: 'brackets'})
-            },
-            data: method==='post'? params || {} : {},
-            timeout: 0,
-            withCredentials: false, // default 为true则产生跨域
-            // `responseType` 表示服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
-            responseType: 'json', // default
-        });
-        return response;
-        // return new Promise((resolve, reject) => {
-        //     response.then(response => {
-        //         resolve(response);
-        //     })
-        //     .catch(error => {
-        //         reject(error)
-        //     }).finally(() => {
-        //         console.log('请求结束了');
-        //     })
-        // });
-    },
-    get: function(){
-        // this.sayHi;
-        // return this.AxiosApi();
-    }
-};
 
 class Axios {
 
@@ -57,9 +14,9 @@ class Axios {
         } else if(env === 'development'){// 测试环境
             baseURL = '/dev';
         } else if(env === 'production'){ // 生产环境
-            baseURL = '/api';
+            baseURL = 'https://api.ycsnews.com/api/v1';
         } else { // 生产环境
-            baseURL = '/api';
+            baseURL = 'https://api.ycsnews.com/api/v1';
         }
 
         const instance = axios({
@@ -82,8 +39,7 @@ class Axios {
             // `responseType` 表示服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
             responseType: 'json', // default
         });
-        // 初始化拦截器
-        // this.initInterceptors();
+
         // 添加请求拦截器
         axios.interceptors.request.use((config:any) => {
             // 在发送请求之前做些什么
@@ -97,7 +53,7 @@ class Axios {
             // 对请求错误做些什么
             return Promise.reject(error);
         });
- 
+
         // 添加响应拦截器
         axios.interceptors.response.use((response:any) => {
             // 对响应数据做点什么
@@ -117,8 +73,8 @@ class Axios {
             if (error && error.response) {
                     switch (error.response.status) {
                         case 400: error.message = '请求错误(400)'; break;
-                        case 401: 
-                            error.message = '未授权，请重新登录(401)'; 
+                        case 401:
+                            error.message = '未授权，请重新登录(401)';
                             localStorage.removeItem('Authorization')
                             router.replace({
                                 path: '/login',
@@ -139,7 +95,7 @@ class Axios {
                 } else {
                     err.message = '连接服务器失败!'
                 }
-            
+
             */
             return Promise.reject(error);
         });
@@ -159,8 +115,8 @@ class Axios {
     }
 
     get =({url,params}:any)=>{
-        console.log(url);
-        
+        console.log('get方法：',url);
+
         let config = {
             url: url,
             method: 'get',

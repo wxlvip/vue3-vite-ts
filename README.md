@@ -62,7 +62,9 @@ vue3 发布之后，性能增强，速度vue2的倍数，打包体积都在减�
 
 ## 功能
 
-- [x] #739
+- [x] 配置数据状态管理工具 Vuex
+- [x] 配置了 Axios
+- [x] 采用 Sass 编译 CSS 样式
 - [ ] https://github.com/octo-org/octo-repo/issues/740
 - [ ] Add delight to the experience when all tasks are com
 
@@ -87,6 +89,57 @@ npm install  or yarn or yarn install
 ```
 npm run dev  or yarn dev
 ```
+
+### 项目打包
+```
+npm run build  or yarn build
+```
+### 本地访问
+
+```
+// 下载安装 http-server
+$ npm install http-server -g
+
+// 进入到 dist 已打包文件目录中
+$ cd dist
+
+// 启动 http-server 使用命令：http-server [path] [options]
+$ http-server ./ 3000
+
+```
+访问: http://127.0.0.1:8080 或者 http://192.168.0.100:8080
+使用 CTRL-C 停止本地服务。[http-server 传送门](https://www.npmjs.com/package/http-server)
+
+### 线上部署
+
+本例使用 Nginx 部署\
+需要注意的是路由配置 src/router/index.ts 
+```js
+const router = createRouter({
+  history: createWebHistory('test'),// 此处部署非根目录，而是 test 目录下,所以括号内配置 test，如果是根目录则改成 createWebHistory()
+  // history: createWebHashHistory('test'),// hash 也是可以，如果面向企业对 url 不敏感可用此模式
+  routes,
+});
+```
+Nginx 配置：
+
+```
+server {
+    listen 80;
+    server_name  test.wxlvip.com;
+    server_tokens off;
+    index index.html index.htm;
+    root /www;
+    location / {
+        proxy_ssl_session_reuse off;
+        try_files $uri $uri/ /index.html;
+        client_max_body_size    1000m;
+    }
+}
+```
+
+访问地址：http://test.wxlvip.com/test/
+
 
 ## Browsers support
 Modern browsers and Internet Explorer 10+.

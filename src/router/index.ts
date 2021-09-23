@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    // which is lazy-loaded when the route is visited. 懒加载
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
@@ -33,15 +33,9 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  // history: createWebHistory(process.env.BASE_URL),
-  history: createWebHistory(),
-  routes,
+  history: createWebHistory('test'),// history 模式，此处部署非根目录，而是 test 目录下,所以括号内配置 test，如果是根目录则改成 createWebHistory()
+  // history: createWebHashHistory('test'),// // 可切换成 hash 模式，如果面向企业对 url 不敏感可用此模式，建议不熟者使用 hash 模式。
+  routes, // `routes: routes` 的缩写
 });
-
-// const router = createRouter({
-//   // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
-//   history: createWebHashHistory(),
-//   routes, // `routes: routes` 的缩写
-// })
 
 export default router;
