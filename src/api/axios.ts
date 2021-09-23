@@ -1,74 +1,90 @@
 // import axios from 'axios';
-import Qs from "qs";
+import Qs from 'qs'
 // import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types';
-import axios from 'axios'; // AxiosInstance
+import axios from 'axios' // AxiosInstance
 
 class Axios {
+  public static init(config: any) {
+    // 创建axios实例
+    let env = process.env.NODE_ENV
+    let baseURL = '/api'
+    if (env === 'debug') {
+      // 开发环境
+      baseURL = '/debug'
+    } else if (env === 'development') {
+      // 测试环境
+      baseURL = '/dev'
+    } else if (env === 'production') {
+      // 生产环境
+      baseURL = 'https://api.ycsnews.com/api/v1'
+    } else {
+      // 生产环境
+      baseURL = 'https://api.ycsnews.com/api/v1'
+    }
 
-    public static init(config:any) {
-        // 创建axios实例
-        let env = process.env.NODE_ENV;
-        let baseURL = '/api';
-        if (env === 'debug') {// 开发环境
-            baseURL = '/debug';
-        } else if(env === 'development'){// 测试环境
-            baseURL = '/dev';
-        } else if(env === 'production'){ // 生产环境
-            baseURL = 'https://api.ycsnews.com/api/v1';
-        } else { // 生产环境
-            baseURL = 'https://api.ycsnews.com/api/v1';
+    const instance = axios({
+      baseURL: baseURL,
+      url: config.url,
+      method: config.method || 'get',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Accept: 'application/json' // 通过头指定，获取的数据类型是JSON 'application/json, text/plain, */*',
+      },
+      params: config.method === 'get' ? config.params || {} : {},
+      // `paramsSerializer` 是一个负责 `params` 序列化的函数
+      // (e.g. https://www.npmjs.com/package/qs, http://api.jquery.com/jquery.param/)
+      paramsSerializer: function (params: {}) {
+        return Qs.stringify(params, { arrayFormat: 'brackets' })
+      },
+      data: config.method === 'post' ? config.params || {} : {},
+      timeout: 0, // 0 为不限制 1000 为 1 秒
+      withCredentials: false, // default 为true则产生跨域
+      // `responseType` 表示服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
+      responseType: 'json' // default
+    })
+
+    /**
+     * 添加请求拦截器
+     * 根据你的项目实际情况来对 config 做处理
+     * 这里对 config 不做任何处理，直接返回
+     */
+    axios.interceptors.request.use(
+      (config: any) => {
+        // 在发送请求之前做些什么
+        console.log('请求拦截')
+        if (localStorage.getItem('Authorization')) {
+          config.headers.Authorization = localStorage.getItem('Authorization')
         }
 
-        const instance = axios({
-            baseURL: baseURL,
-            url: config.url,
-            method: config.method || 'get',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json', // 通过头指定，获取的数据类型是JSON 'application/json, text/plain, */*',
-            },
-            params: config.method==='get'? config.params || {} : {},
-            // `paramsSerializer` 是一个负责 `params` 序列化的函数
-            // (e.g. https://www.npmjs.com/package/qs, http://api.jquery.com/jquery.param/)
-            paramsSerializer: function(params:{}) {
-                return Qs.stringify(params, {arrayFormat: 'brackets'})
-            },
-            data: config.method==='post'? config.params || {} : {},
-            timeout: 0,// 0 为不限制
-            withCredentials: false, // default 为true则产生跨域
-            // `responseType` 表示服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
-            responseType: 'json', // default
-        });
+        return config
+      },
+      function (error: any) {
+        // 对请求错误做些什么
+        return Promise.reject(error)
+      }
+    )
 
-        // 添加请求拦截器
-        axios.interceptors.request.use((config:any) => {
-            // 在发送请求之前做些什么
-            console.log('请求拦截');
-            if (localStorage.getItem('Authorization')) {
-                config.headers.Authorization = localStorage.getItem('Authorization')
-            }
+    /**
+     * 添加响应拦截器
+     * 根据你的项目实际情况来对 response 和 error 做处理
+     * 这里对 response 和 error 不做任何处理，直接返回
+     */
+    axios.interceptors.response.use(
+      (response: any) => {
+        // 对响应数据做点什么
+        console.log('响应拦截')
+        if (response.data.code === 1003) {
+          // router.replace({
+          //   path: '/login'
+          // })
+          localStorage.removeItem('Authorization')
+        }
 
-            return config;
-        }, function (error:any) {
-            // 对请求错误做些什么
-            return Promise.reject(error);
-        });
-
-        // 添加响应拦截器
-        axios.interceptors.response.use((response:any) => {
-            // 对响应数据做点什么
-            console.log('响应拦截');
-            if (response.data.code === 1003) {
-                // router.replace({
-                //   path: '/login'
-                // })
-                localStorage.removeItem('Authorization')
-            }
-
-            return response;
-        }, (error:any) => {
-            // 对响应错误做点什么
-            /*
+        return response
+      },
+      (error: any) => {
+        // 对响应错误做点什么
+        /*
             //==============  错误处理  ====================
             if (error && error.response) {
                     switch (error.response.status) {
@@ -97,66 +113,66 @@ class Axios {
                 }
 
             */
-            return Promise.reject(error);
-        });
+        return Promise.reject(error)
+      }
+    )
 
-        return new Promise((resolve, reject) => {
-            instance.then((response:any) => {
-                // 如果成功了, 调用resolve(value)
-                resolve(response);
-            })
-            .catch((error:any) => {
-                // 如果失败了, 不调用reject(reason), 而是提示异常信息
-                reject(error)
-                // message.error('请求出错了: ' + error.message).then(r => {});
-            }).finally(() => {
-            })
-        });
+    return new Promise((resolve, reject) => {
+      instance
+        .then((response: any) => {
+          // 如果成功了, 调用resolve(value)
+          resolve(response)
+        })
+        .catch((error: any) => {
+          // 如果失败了, 不调用reject(reason), 而是提示异常信息
+          reject(error)
+          // message.error('请求出错了: ' + error.message).then(r => {});
+        })
+        .finally(() => {})
+    })
+  }
+
+  get = ({ url, params }: any) => {
+    console.log('get方法：', url)
+
+    let config = {
+      url: url,
+      method: 'get',
+      params: params
     }
+    return Axios.init(config)
+  }
 
-    get =({url,params}:any)=>{
-        console.log('get方法：',url);
-
-        let config = {
-            url: url,
-            method: 'get',
-            params: params
-        }
-        return  Axios.init(config);
+  post = ({ url, params }: any) => {
+    let config = {
+      url: url,
+      method: 'post',
+      params: params
     }
+    return Axios.init(config)
+  }
 
-    post =({url,params}:any)=>{
-        let config = {
-            url: url,
-            method: 'post',
-            params: params
-        }
-        return  Axios.init(config);
+  put = ({ url, params }: any) => {
+    let config = {
+      url: url,
+      method: 'put',
+      params: params
     }
+    return Axios.init(config)
+  }
 
-    put =({url,params}:any)=>{
-        let config = {
-            url: url,
-            method: 'put',
-            params: params
-        }
-        return  Axios.init(config);
+  del = ({ url, params }: any) => {
+    let config = {
+      url: url,
+      method: 'delete',
+      params: params
     }
-
-    del =({url,params}:any)=>{
-        let config = {
-            url: url,
-            method: 'delete',
-            params: params
-        }
-        return  Axios.init(config);
-    }
-
+    return Axios.init(config)
+  }
 }
-
 
 // let axios = new Axios();
 // axios.nterceptors.request.use()
 // axios.nterceptors.request.eject()
 
-export default new Axios();
+export default new Axios()
