@@ -161,9 +161,9 @@ server {
 Modern browsers and Internet Explorer 10+.
 
 
-| IE          | Edge             | 火狐                     | Chrome                 | Safari                 |
-| ----------- | ---------------- | ------------- --------- | ---------------------- | ---------------------- |
-| not support | last 2 versions  | Firefox last 2 versions | Chrome last 2 versions | Safari last 2 versions |
+| IE              | Edge             | 火狐                     | Chrome                 | Safari                 |
+| --------------- | ---------------- |----------------------  |----------------------  |---------------------- |
+| not support     | last 2 versions  | Firefox last 2 versions | Chrome last 2 versions | Safari last 2 versions |
 
 
 ## License
