@@ -1,7 +1,8 @@
 <script lang="ts">
+/* eslint-disable */
   /* 注意 <script lang="ts"> 中没有 setup 与 HelloWorld.vue 组件中声明的有所不同,这两个组件提供两种不同的方式，仅供参开 */
 
-  import { reactive, computed, watch, onMounted, onUnmounted, toRefs, ref } from 'vue'
+  import { reactive, watch, onMounted, onUnmounted, toRefs, ref } from 'vue'
   import { useRouter } from 'vue-router'
   // reactive: 接收一个普通对象然后返回该普通对象的响应式代理。等同于 2.x 的 Vue.observable()
   // ref: 接受一个参数值并返回一个响应式且可改变的 ref 对象。ref 对象拥有一个指向内部值的单一属性 .value。

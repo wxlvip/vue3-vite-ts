@@ -1,7 +1,8 @@
 # Vue 3 + Typescript + Vite
 
-![](https://img.shields.io/badge/vue-3.2.6-brightgreen) ![](https://img.shields.io/badge/vue--router-4.0.0-brightgreen) ![](https://img.shields.io/badge/vuex-4.0.2-brightgreen) ![](https://img.shields.io/badge/axios-0.21.4-brightgreen) ![](https://img.shields.io/badge/sass-1.41.0-brightgreen) ![](https://img.shields.io/badge/normalize.css-v8.0.1-brightgreen) ![](https://img.shields.io/badge/element--plus-1.1.0-brightgreen) ![](https://img.shields.io/badge/Typescript-4.3.2-brightgreen) ![](https://img.shields.io/badge/vite-2.5.4-brightgreen) ![](https://img.shields.io/badge/license-MIT-green) ![](https://img.shields.io/badge/release-v0.0.1-blue) ![](https://img.shields.io/badge/%24-donate-ff69b4)
+![](https://img.shields.io/badge/vue-3.2.6-brightgreen) ![](https://img.shields.io/badge/vite-2.5.4-brightgreen) ![](https://img.shields.io/badge/vue--router-4.0.0-brightgreen) ![](https://img.shields.io/badge/vuex-4.0.2-brightgreen) ![](https://img.shields.io/badge/axios-0.21.4-brightgreen) ![](https://img.shields.io/badge/sass-1.41.0-brightgreen) ![](https://img.shields.io/badge/normalize.css-v8.0.1-brightgreen) ![](https://img.shields.io/badge/element--plus-1.1.0-brightgreen) ![](https://img.shields.io/badge/Typescript-4.3.2-brightgreen) ![](https://img.shields.io/badge/license-MIT-green) ![](https://img.shields.io/badge/release-v0.0.1-blue) ![](https://img.shields.io/badge/%24-donate-ff69b4)
 
+一套集 Vue 3.x + Vite 2.x + TypeScript + Vue Router + Vuex + Axios + ESLint 等库的前端快速开发环境
 ## 简介
 
 vue3 发布之后，性能增强，速度 vue2 的倍数，打包体积都在减小（treeshaking）,composition api 增加了项目可读性。
@@ -12,19 +13,19 @@ vue3 发布之后，性能增强，速度 vue2 的倍数，打包体积都在减
 
 ## 技术栈
 
-- 编程语言：TypeScript 4.x + JavaScript
-- 构建工具：Vite 2.x
-- 前端框架：Vue 3.x
-- 路由工具：Vue Router 4.x
-- 状态管理：Vuex 4.x
-- UI 框架：Element Plus
-- CSS 预编译：Stylus / Sass / Less
-- HTTP 工具：Axios
-- Git Hook 工具：husky + lint-staged
-- 代码规范：EditorConfig + Prettier + ESLint + Airbnb JavaScript Style Guide
-- 提交规范：Commitizen + Commitlint
-- 单元测试：vue-test-utils + jest + vue-jest + ts-jest
-- 自动部署：GitHub Actions
+- 编程语言：[TypeScript 4.x](https://www.typescriptlang.org/zh/) + [JavaScript](https://www.javascript.com/)
+- 构建工具：[Vite 2.x](https://cn.vitejs.dev/)
+- 前端框架：[Vue 3.x](https://v3.cn.vuejs.org/)
+- 路由工具：[Vue Router 4.x](https://next.router.vuejs.org/zh/index.html)
+- 状态管理：[Vuex 4.x](https://next.vuex.vuejs.org/)
+- UI 框架：[Element Plus](https://element-plus.org/#/zh-CN)
+- CSS 预编译：[Sass](https://sass.bootcss.com/documentation)
+- HTTP 工具：[Axios](https://axios-http.com/)
+- Git Hook 工具：[husky](https://typicode.github.io/husky/#/) + [lint-staged](https://github.com/okonet/lint-staged)
+- 代码规范：[EditorConfig](http://editorconfig.org/) + [Prettier](https://prettier.io/) + [ESLint](https://eslint.org/) + [Airbnb JavaScript Style Guide](Airbnb JavaScript Style Guide)
+- 提交规范：[Commitizen](http://commitizen.github.io/cz-cli/) + [Commitlint](https://commitlint.js.org/#/)
+- 单元测试：[vue-test-utils](https://next.vue-test-utils.vuejs.org/) + [jest](https://jestjs.io/) + [vue-jest](https://github.com/vuejs/vue-jest) + [ts-jest](https://kulshekhar.github.io/ts-jest/)
+
 
 ## 目录结构
 
@@ -33,8 +34,7 @@ vue3 发布之后，性能增强，速度 vue2 的倍数，打包体积都在减
 │   └── favicon.ico
 ├── src
 │   ├── api                 # apis统一管理
-│     ├── axios.ts          # Axios 类封装
-│     └── index.ts          # API 接口封装
+│     └── axios.ts          # API 接口封装
 │   ├── assets              # 静态资源目录
 │   ├── components          # 公共组件目录
 │     └── HelloWorld.vue    # HelloWorld 组件
@@ -63,21 +63,23 @@ vue3 发布之后，性能增强，速度 vue2 的倍数，打包体积都在减
 └── yarn.lock
 ```
 
-## 功能
+## 功能清单
 
 - [x] 配置数据状态管理工具 Vuex
-- [x] 配置了 Axios
+- [x] 通过 Axios 实现前后端交互
 - [x] 采用 Sass 编译 CSS 样式
-- [ ] https://github.com/octo-org/octo-repo/issues/740
-- [ ] Add delight to the experience when all tasks are com
+- [x] 动态添加页面
+- [x] 提供预置工具函数
+- [ ] 其他...
 
-## Setup
+## 快速开始
 
 ### 下载项目
 
 ```
 // 把模板下载到本地
 git clone https://github.com/lin-xin/vue-manage-system.git
+
 // 进入模板目录
 cd vue-manage-system
 ```
@@ -86,19 +88,25 @@ cd vue-manage-system
 
 ```
 // 需要 Node.js 版本 >= 12.0.0
-npm install  or yarn or yarn install
+npm install
+# or
+yarn install
 ```
 
 ### 项目启动
 
 ```
-npm run dev  or yarn dev
+npm run dev
+# or
+yarn dev
 ```
 
 ### 项目打包
 
 ```
-npm run build  or yarn build
+npm run build
+# or
+yarn build
 ```
 
 ### 本地访问
@@ -112,7 +120,6 @@ $ cd dist
 
 // 启动 http-server 使用命令：http-server [path] [options]
 $ http-server ./ 3000
-
 ```
 
 访问: http://127.0.0.1:8080 或者 http://192.168.0.100:8080 使用 CTRL-C 停止本地服务。[http-server 传送门](https://www.npmjs.com/package/http-server)
@@ -153,9 +160,9 @@ server {
 
 Modern browsers and Internet Explorer 10+.
 
-| IE               | 火狐                    | Chrome                 | Safari                 |
-| ---------------- | ----------------------- | ---------------------- | ---------------------- |
-| IE10, IE11, Edge | Firefox last 2 versions | Chrome last 2 versions | Safari last 2 versions |
+| IE          | Edge             | 火狐                    | Chrome                 | Safari                 |
+| ----------- | ---------------- | ------------- --------- | ---------------------- | ---------------------- |
+| not support | last 2 versions  | Firefox last 2 versions | Chrome last 2 versions | Safari last 2 versions |
 
 ## License
 
@@ -163,7 +170,9 @@ Modern browsers and Internet Explorer 10+.
 
 Copyright (c) 2021-present
 
+
 <!-- 此内容不会出现在呈现的 Markdown 中
+- 自动部署：[GitHub Actions](https://docs.github.com/cn/actions/learn-github-actions)
 
  - [x] Element Plus
  - [ ] 登录/注销

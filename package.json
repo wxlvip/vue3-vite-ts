@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "prettier": "npx prettier --write ."
   },
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
@@ -25,8 +26,14 @@
   },
   "devDependencies": {
     "@types/node": "^16.9.2",
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.2.6",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-vue": "^7.18.0",
     "typescript": "^4.3.2",
     "vite": "^2.5.4",
     "vite-plugin-style-import": "^1.2.1",
